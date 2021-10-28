@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <meta content="Leandro Fontana" name="author" />
+    <title>eLIBRARY - Index</title>
+    <link rel="shortcut icon" th:href="@{/img/book-icon.png}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link rel="stylesheet" th:href="@{/css/author-form.css}">
+</head>
+
+<body>
+    <!--NAVBAR-->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/index}"><img th:src="@{/img/library-icon.png}"
+                        alt="icono-web" class="navbar-icon"></a>
+                <a href="#" id="tittle-webpage">eLIBRARY</a>
+                <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse"
+                    type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mb-2 mb-md-0 w-100">
+                        <!--DROPDOWN LIBROS-->
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                                id="dropdown-books" role="button">
+                                Libros
+                            </a>
+                            <ul aria-labelledby="dropdown-usuarios" class="dropdown-menu dropdown-menu-dark">
+                                <li>
+                                    <a class="dropdown-item" th:href="@{/book}">Mostrar libros</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" th:href="@{/book/create}">Crear libro</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--DROPDOWN AUTOR-->
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                                id="dropdown-usuarios" role="button">
+                                Autor
+                            </a>
+                            <ul aria-labelledby="dropdown-usuarios" class="dropdown-menu dropdown-menu-dark">
+                                <li>
+                                    <a class="dropdown-item" th:href="@{/author}">Mostrar autores</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" th:href="@{/author/create}">Crear autor</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--DROPDOWN EDITORIAL-->
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                                id="dropdown-mascotas" role="button">
+                                Editorial
+                            </a>
+                            <ul aria-labelledby="dropdown-mascotas" class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" th:href="@{/publisher}">Mostrar editoriales</a></li>
+                                <li>
+                                    <a class="dropdown-item" th:href="@{/publisher/create}">Crear editorial</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+        </div>
+    </nav>
+    <!--FORMULARIO-->
+    <div class="container" id="form">
+        <div class="row">
+            <div class="col-12 mt-auto pt-5">
+                <div class="shadow p-3 mb-5 bg-body rounded justify-content-center" style="width: 500px;">
+                    <h1 style="text-align: center;">FORMULARIO DE REGISTRO DE AUTOR</h1>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <form class="g-5 needs-validation" autocomplete="off" novalidate method="POST"
+                                      th:action="@{/author/__${action}__}" th:object="${author}">
+                                    <input th:field="*{id}" type="hidden"/>
+                                    <div class="col-md-12 position-relative">
+                                        <label for="validationTooltip01" class="form-label">Nombre</label>
+                                        <input type="text" class="form-control" id="validationTooltip01" required th:field="*{name}">
+                                        <div class="invalid-tooltip">
+                                            Inserte nombre del autor por favor
+                                        </div>
+                                    </div>  
+                                    <div class="col-12 d-flex justify-content-center">    
+                                       <button class="btn btn-primary mt-5" type="submit" 
+                                               th:text="${action == 'save'} ? 'Crear editorial' : 'Guardar cambios'">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script>
+
+        (function () {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+</body>
+
+</html>
