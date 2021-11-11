@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment::head"></head>
+<body>
+    <nav th:replace="fragment::navbar"></nav>
+    <div class="container" id="form">
+        <div class="row">
+            <div class="col-12 mt-auto pt-5">
+                <div class="shadow p-3 mb-5 bg-body rounded justify-content-center" style="width: 500px;">
+                    <h1 style="text-align: center;">FORMULARIO DE REGISTRO DE CLIENTE</h1>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <form class="g-5 needs-validation" autocomplete="off" novalidate method="POST"
+                                      th:action="@{/client/__${action}__}" th:object="${client}">
+                                    <input th:field="*{id}" type="hidden"/>
+                                    <div class="col-md-12 position-relative">
+                                        <label for="validationTooltip01" class="form-label">Nombre</label>
+                                        <input type="text" class="form-control" id="validationTooltip01" required th:field="*{name}">
+                                        <div class="invalid-tooltip">
+                                            Inserte nombre por favor
+                                        </div>
+                                    </div>  
+                                    <div class="col-md-12 position-relative">
+                                        <label for="validationTooltip01" class="form-label">Apellido</label>
+                                        <input type="text" class="form-control" id="validationTooltip01" required th:field="*{lastName}">
+                                        <div class="invalid-tooltip">
+                                            Inserte apellido por favor
+                                        </div>
+                                    </div>  
+                                    <div class="col-md-12 position-relative">
+                                        <label for="validationTooltip01" class="form-label">DNI</label>
+                                        <input type="text" class="form-control" id="validationTooltip01" required th:field="*{dni}">
+                                        <div class="invalid-tooltip">
+                                            Inserte el DNI por favor
+                                        </div>
+                                    </div>  
+                                    <div class="col-md-12 position-relative">
+                                        <label for="validationTooltip01" class="form-label">Telefono</label>
+                                        <input type="text" class="form-control" id="validationTooltip01" required th:field="*{phoneNumber}">
+                                        <div class="invalid-tooltip">
+                                            Inserte su numero de telefono por favor
+                                        </div>
+                                    </div>  
+                                    <div class="col-12 d-flex justify-content-center">    
+                                       <button class="btn btn-primary mt-5" type="submit" 
+                                               th:text="${action == 'save'} ? 'Crear Cliente' : 'Guardar cambios'">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="fragment::footer-gral"></footer>
+    <script th:replace="fragment::script-gral"></script>
+    <script th:replace="fragment::form-js"></script>
+</body>
+</html>

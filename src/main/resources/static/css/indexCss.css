@@ -25,6 +25,24 @@
     height: 200px;
 }
 
+.index-cliente{
+    background-image: url(../img/cliente.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 500%;
+    height: 200px;
+}
+
+.index-prestamo{
+    background-image: url(../img/prestamo.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 500%;
+    height: 200px;
+}
+
 #tittle-webpage{
     text-decoration: none;
     color: whitesmoke;

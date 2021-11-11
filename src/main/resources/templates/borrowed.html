@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragment::head"></head>
+
+<body>
+    <nav th:replace="fragment::navbar"></nav>
+    <div class="container" id="show">
+        <div class="row">
+            <div class="col-12 mt-auto pt-5">
+                <div class="shadow p-3 mb-5 bg-body rounded justify-content-center">
+                    <h1 style="text-align: center;">LISTA DE PRESTAMOS</h1>
+                    <div th:if="${borrowed.isEmpty()}" style="text-align: center;">
+                        <h5>Aun no se cargaron prestamos por favor dirigase a <a th:href="@{/borrowed/create}">Crear
+                                Prestamo.</a></h5>
+                    </div>
+                    <div th:replace="fragment::alerts"></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table col-12">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Nombre de Libro</th>
+                                            <th scope="col">Autor</th>
+                                            <th scope="col">Editorial</th>
+                                            <th scope="col">Cliente</th>
+                                            <th scope="col">Fecha de Prestamo</th>
+                                            <th scope="col">Fecha de Devolucion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="loan : ${borrowed}" class="text-center">
+                                            <td class="col px-md-2" th:text="${loan.id}"></td>
+                                            <td class="col px-md-2">
+                                                <span th:text="${loan.book.title}"></span>
+                                            </td>
+                                            <td class="col px-md-2">
+                                                <span th:text="${loan.book.author.name}"></span>
+                                            </td>
+                                            <td class="col px-md-2">
+                                                <span th:text="${loan.book.publisher.name}"></span>
+                                            </td>
+                                            <td class="col px-md-2">
+                                                <span th:text="${loan.client.name}"></span>
+                                            </td>
+                                            <td class="col px-md-2 text-center">
+                                                <span th:text="${loan.borrowingDate}"></span>
+                                            </td>
+                                            <td class="col px-md-2 text-center">
+                                                <span th:text="${loan.returnDate}"></span>
+                                            </td>
+                                            <td class="col-md-4 px-md-2 d-flex justify-content-around w-100">
+                                                <a class="btn btn-secondary btn-sm"
+                                                    th:href="@{/borrowed/edit/__${loan.id}__}">Editar</a>
+                                                <form method="post"
+                                                    th:action="${loan.register == true} ? @{/borrowed/delete/__${loan.id}__} : @{/borrowed/register/__${loan.id}__}">
+                                                    <button class="btn btn-danger btn-sm" type="submit"
+                                                        th:text="${loan.register == true} ? 'Dar de baja' : 'Dar de alta'">Eliminar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="fragment::footer-gral"></footer>
+    <script th:replace="fragment::script-gral"></script>
+    <script th:replace="fragment::form-js"></script>
+</body>
+
+</html>
