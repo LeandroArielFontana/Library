@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragment::head"></head>
+
+<body>
+    <nav th:replace="fragment::navbar"></nav>
+    <div class="container" id="show">
+        <div class="row">
+            <div class="col-12 mt-auto pt-5">
+                <div class="shadow p-3 mb-5 bg-body rounded justify-content-center" style="width: 500px;">
+                    <h1 style="text-align: center;">LISTA DE AUTORES</h1>
+                    <div th:if="${authors.isEmpty()}" class="justify-content-center">
+                        <h5>Aun no se cargaron autores por favor dirigase a <a th:href="@{/author/create}">Crear
+                                autor.</a></h5>
+                    </div>
+                    <div th:replace="fragment::alerts"></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Nombre</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="author : ${authors}" class="text-center">
+                                            <td class="col-md-4 px-md-2" th:text="${author.id}"></td>
+                                            <td class="col-md-4 px-md-2">
+                                                <span th:text="${author.name}"></span>
+                                            </td>
+                                            <td class="col-md-4 px-md-2 d-flex justify-content-around w-100">
+                                                <a class="btn btn-secondary btn-sm"
+                                                    th:href="@{/author/edit/__${author.id}__}">Editar</a>
+                                                <form method="post"
+                                                    th:action="${author.register == true} ? @{/author/delete/__${author.id}__} : @{/author/register/__${author.id}__}">
+                                                    <button class="btn btn-danger btn-sm" type="submit"
+                                                        th:text="${author.register == true} ? 'Dar de baja' : 'Dar de alta'">Eliminar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="fragment::footer-gral"></footer>
+    <script th:replace="fragment::script-gral"></script>
+
+</body>
+
+</html>

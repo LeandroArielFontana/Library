@@ -19,12 +19,6 @@ public class AuthorService {
     @Transactional
     public void create(String name) throws MyException{
 
-        if(Util.checkWhiteSpace(name)){
-            throw new MyException("El campo no puede estar vacio");
-        } else if (!Util.checkNames(name)){
-            throw new MyException("El nombre contiene numeros o espacios");
-        }
-
         Author author = new Author();
         author.setName(name);
         author.setRegister(true);
@@ -36,12 +30,11 @@ public class AuthorService {
 
         if (iAuthorRepository.findById(id).orElse(null)==null) {
             throw new MyException("No existe un Autor con ese ID");
-        }else if(Util.checkWhiteSpace(name)){
-            throw new MyException("El campo no puede estar vacio");
-        } else if (!Util.checkNames(name)){
-            throw new MyException("El nombre contiene numeros o espacios");
         }
-        iAuthorRepository.updateName(id, name);
+
+        Author author = iAuthorRepository.findById(id).orElse(null);
+        author.setName(name);
+        iAuthorRepository.save(author);
     }
 
     @Transactional

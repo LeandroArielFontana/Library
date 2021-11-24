@@ -8,6 +8,7 @@ import com.example.Libreria3.Service.AuthorService;
 import com.example.Libreria3.Service.BookService;
 import com.example.Libreria3.Service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,6 +46,7 @@ public class BookController {
     }
 
     @GetMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView createBook(){
         ModelAndView mav = new ModelAndView("book-form");
         mav.addObject("book", new Book());
@@ -56,6 +58,7 @@ public class BookController {
     }
 
     @GetMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView editBook(@PathVariable Integer id, RedirectAttributes attributes) {
         ModelAndView mav = new ModelAndView("book-form");
 
@@ -77,6 +80,7 @@ public class BookController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView saveBook(@RequestParam String title, @RequestParam Integer year, @RequestParam Long isbn, @RequestParam Integer copies, @RequestParam Author author, @RequestParam Publisher publisher, RedirectAttributes attributes){
 
         try{
@@ -91,6 +95,7 @@ public class BookController {
     }
 
     @PostMapping("/edit")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView updateBook(@RequestParam String title, @RequestParam Integer year, @RequestParam Long isbn, @RequestParam Integer copies, @RequestParam Author author, @RequestParam Publisher publisher, @RequestParam Integer id, RedirectAttributes attributes){
 
         try{
@@ -105,12 +110,14 @@ public class BookController {
     }
 
     @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView deleteBook(@PathVariable Integer id){
         bookService.delete(id);
         return new RedirectView ("/book");
     }
 
     @PostMapping("/register/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView registerBook(@PathVariable Integer id){
         bookService.registerBook(id);
         return new RedirectView("/book");

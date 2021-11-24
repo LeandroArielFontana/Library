@@ -1,9 +1,14 @@
 package com.example.Libreria3.Entities;
 
 import org.hibernate.annotations.SQLDelete;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.Date;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @SQLDelete(sql = "UPDATE Client c SET c.register = false WHERE c.id = ?")
 public class Client {
@@ -19,17 +24,25 @@ public class Client {
     private String lastName;
     private String phoneNumber;
     private Boolean register;
+    @OneToOne
+    private UserSecurity userSecurity;
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private Date createDate;
+    @LastModifiedDate
+    private Date updateDate;
 
     public Client() {
     }
 
-    public Client(Integer id, Long dni, String name, String lastName, String phoneNumber, Boolean register) {
+    public Client(Integer id, Long dni, String name, String lastName, String phoneNumber, Boolean register, UserSecurity userSecurity) {
         this.id = id;
         this.dni = dni;
         this.name = name;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.register = register;
+        this.userSecurity = userSecurity;
     }
 
     public Integer getId() {
@@ -78,5 +91,13 @@ public class Client {
 
     public void setRegister(Boolean register) {
         this.register = register;
+    }
+
+    public UserSecurity getUserSecurity() {
+        return userSecurity;
+    }
+
+    public void setUserSecurity(UserSecurity userSecurity) {
+        this.userSecurity = userSecurity;
     }
 }

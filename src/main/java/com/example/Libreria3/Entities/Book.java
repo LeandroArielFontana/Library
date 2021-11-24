@@ -1,9 +1,13 @@
 package com.example.Libreria3.Entities;
 
 import org.hibernate.annotations.SQLDelete;
-
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
+import java.util.Date;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @SQLDelete(sql = "UPDATE Book b SET b.register = false WHERE b.id = ?")
 public class Book{
@@ -26,6 +30,11 @@ public class Book{
     private Author author;
     @ManyToOne
     private Publisher publisher;
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private Date createDate;
+    @LastModifiedDate
+    private Date updateDate;
 
     public Book(Integer id, Long isbn, String title, Integer year, Integer copies, Integer borrowedCopies, Integer remainingCopies, Boolean register, Author author, Publisher publisher) {
         this.id = id;

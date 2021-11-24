@@ -4,6 +4,7 @@ import com.example.Libreria3.Entities.Author;
 import com.example.Libreria3.Exceptions.MyException;
 import com.example.Libreria3.Service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +41,7 @@ public class AuthorController {
     }
 
     @GetMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView createAuthor (){
         ModelAndView mav = new ModelAndView("author-form");
         mav.addObject("author", new Author());
@@ -49,6 +51,7 @@ public class AuthorController {
     }
 
     @GetMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView editAuthor (@PathVariable Integer id, RedirectAttributes attributes){
         ModelAndView mav = new ModelAndView("author-form");
 
@@ -68,6 +71,7 @@ public class AuthorController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView saveAuthor(@RequestParam String name, RedirectAttributes attributes) {
         try{
             authorService.create(name);
@@ -81,6 +85,7 @@ public class AuthorController {
     }
 
     @PostMapping("/edit")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView updateAuthor(@RequestParam Integer id, @RequestParam String name, RedirectAttributes attributes){
         try{
             authorService.update(id, name);
@@ -95,12 +100,14 @@ public class AuthorController {
     }
 
     @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView deleteAuthor(@PathVariable Integer id){
         authorService.delete(id);
         return new RedirectView("/author");
     }
 
     @PostMapping("/register/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView registerAuthor(@PathVariable Integer id){
         authorService.register(id);
         return new RedirectView("/author");

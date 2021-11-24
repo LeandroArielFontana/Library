@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head">
     <meta charset="UTF-8">
@@ -48,7 +48,7 @@
                                     <a class="dropdown-item" th:href="@{/book}">Mostrar libros</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" th:href="@{/book/create}">Crear libro</a>
+                                    <a class="dropdown-item" th:href="@{/book/create}" sec:authorize="hasRole('ADMIN')">Crear libro</a>
                                 </li>
                             </ul>
                         </li>
@@ -63,7 +63,7 @@
                                     <a class="dropdown-item" th:href="@{/author}">Mostrar autores</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" th:href="@{/author/create}">Crear autor</a>
+                                    <a class="dropdown-item" th:href="@{/author/create}" sec:authorize="hasRole('ADMIN')">Crear autor</a>
                                 </li>
                             </ul>
                         </li>
@@ -76,7 +76,7 @@
                             <ul aria-labelledby="dropdown-publsiher" class="dropdown-menu dropdown-menu-dark">
                                 <li><a class="dropdown-item" th:href="@{/publisher}">Mostrar editoriales</a></li>
                                 <li>
-                                    <a class="dropdown-item" th:href="@{/publisher/create}">Crear editorial</a>
+                                    <a class="dropdown-item" th:href="@{/publisher/create}" sec:authorize="hasRole('ADMIN')">Crear editorial</a>
                                 </li>
                             </ul>
                         </li>
@@ -89,7 +89,7 @@
                             <ul aria-labelledby="dropdown-client" class="dropdown-menu dropdown-menu-dark">
                                 <li><a class="dropdown-item" th:href="@{/client}">Mostrar clientes</a></li>
                                 <li>
-                                    <a class="dropdown-item" th:href="@{/client/create}">Crear cliente</a>
+                                    <a class="dropdown-item" th:href="@{/client/create}" sec:authorize="hasRole('ADMIN')">Crear cliente</a>
                                 </li>
                             </ul>
                         </li>
@@ -102,13 +102,25 @@
                             <ul aria-labelledby="dropdown-borrowed" class="dropdown-menu dropdown-menu-dark">
                                 <li><a class="dropdown-item" th:href="@{/borrowed}">Mostrar prestamos</a></li>
                                 <li>
-                                    <a class="dropdown-item" th:href="@{/borrowed/create}">Crear prestamo</a>
+                                    <a class="dropdown-item" th:href="@{/borrowed/create}" sec:authorize="hasRole('ADMIN')">Crear prestamo</a>
                                 </li>
                             </ul>
+                        </li>
+                        <li>
+                            <form th:action="@{/logout}">
+                              <a class="nav-link text-white" href="#" onclick="this.parentNode.submit();"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+                            </form>
+                        </li>
+                        <li>
+                            <a class="nav-link text-white">
+                              <span class="text-secondary">Bienvenido: </span>
+                              <span class="text-secondary" sec:authentication="name"><b>User</b></span>
+                            </a>
                         </li>
                     </ul>
                 </div>
         </div>
+        
     </nav>
 
     <footer class="footer py-3 bg-dark fixed-bottom" th:fragment="footer-gral">

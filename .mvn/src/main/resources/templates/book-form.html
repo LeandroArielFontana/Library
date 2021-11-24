@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragment::head"></head>
+
+<body>
+    <nav th:replace="fragment::navbar"></nav>
+    <!--FORMULARIO-->
+    <div class="container" id="form">
+        <div class="row">
+            <div class="col-12 mt-auto pt-5">
+                <div class="shadow p-3 mb-5 bg-body rounded justify-content-center" style="width: 500px;">
+                    <h1 style="text-align: center;">FORMULARIO DE REGISTRO DE LIBRO</h1>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <form class="g-5 needs-validation" autocomplete="off" novalidate method="POST"
+                                    th:action="@{/book/__${action}__}" th:object="${book}">
+                                    <input th:field="*{id}" type="hidden" />
+                                    <div class="col-md-12 position-relative">
+                                        <label for="validationTooltip01" class="form-label">ISBN</label>
+                                        <input type="text" class="form-control" id="validationTooltip01" required
+                                            th:field="*{isbn}">
+                                        <div class="invalid-tooltip">
+                                            Inserte el ISBN del libro por favor
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 position-relative">
+                                        <label for="validationTooltip01" class="form-label">Titulo</label>
+                                        <input type="text" class="form-control" id="validationTooltip01" required
+                                            th:field="*{title}">
+                                        <div class="invalid-tooltip">
+                                            Inserte titulo del libro por favor
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 position-relative">
+                                        <label for="validationTooltip01" class="form-label">Ejemplares</label>
+                                        <input type="text" class="form-control" id="validationTooltip01" required
+                                            th:field="*{copies}">
+                                        <div class="invalid-tooltip">
+                                            Inserte la cantidad de ejemplares del libro por favor
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 position-relative">
+                                        <label for="validationTooltip01" class="form-label">Año</label>
+                                        <input type="text" class="form-control" id="validationTooltip01" required
+                                            th:field="*{year}">
+                                        <div class="invalid-tooltip">
+                                            Inserte el año de creacion del libro por favor
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3 mt-3">
+                                        <label class="input-group-text" for="inputGroupSelect01">Autor</label>
+                                        <select class="form-select" id="inputGroupSelect01" th:field="*{author}">
+                                            <option selected value="">Elija un Autor...</option>
+                                            <option th:value="${author.id}" th:each="author : ${authors}">
+                                                <span th:text="${author.name}"></span>
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group mb-3 mt-3">
+                                        <label class="input-group-text" for="inputGroupSelect01">Editorial</label>
+                                        <select class="form-select" id="inputGroupSelect01" th:field="*{publisher}">
+                                            <option selected value="">Elija una Editorial...</option>
+                                            <option th:value="${publisher.id}" th:each="publisher : ${publishers}">
+                                                <span th:text="${publisher.name}"></span>
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <button class="btn btn-primary mt-5" type="submit"
+                                            th:text="${action == 'save'} ? 'Crear Libro' : 'Guardar cambios'">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="fragment::footer-gral"></footer>
+    <script th:replace="fragment::script-gral"></script>
+    <script th:replace="fragment::form-js"></script>
+</body>
+
+</html>

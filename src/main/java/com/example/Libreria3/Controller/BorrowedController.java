@@ -9,6 +9,7 @@ import com.example.Libreria3.Service.BorrowedService;
 import com.example.Libreria3.Service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,6 +47,7 @@ public class BorrowedController {
     }
 
     @GetMapping ("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView createLoan (){
         ModelAndView mav = new ModelAndView("loan-form");
         mav.addObject("borrowed", new Borrowed());
@@ -57,6 +59,7 @@ public class BorrowedController {
     }
 
     @GetMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView editLoan (@PathVariable Integer id, RedirectAttributes attributes){
         ModelAndView mav = new ModelAndView("loan-form");
 
@@ -75,9 +78,8 @@ public class BorrowedController {
         return mav;
     }
 
-    //USAR mav.setViewName
-
     @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView saveLoan(@RequestParam Book book, @RequestParam Client client, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date returnDate, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date borrowingDate, RedirectAttributes attributes){
 
         try{
@@ -93,6 +95,7 @@ public class BorrowedController {
     }
 
     @PostMapping("/edit")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView updateLoan(@RequestParam Integer id, @RequestParam Book book, @RequestParam Client client, @RequestParam Date returnDate, @RequestParam Date borrowingDate, RedirectAttributes attributes){
         try{
             borrowedService.updateBorrowed(id, book, client, returnDate, borrowingDate);
@@ -106,12 +109,14 @@ public class BorrowedController {
     }
 
     @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView deleteLoan(@PathVariable Integer id){
         borrowedService.deleteLoan(id);
         return new RedirectView("/borrowed");
     }
 
     @PostMapping("/register/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView registerLoan(@PathVariable Integer id){
         borrowedService.register(id);
         return new RedirectView("/borrowed");

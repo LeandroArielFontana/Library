@@ -4,6 +4,7 @@ import com.example.Libreria3.Entities.Book;
 import com.example.Libreria3.Entities.Borrowed;
 import com.example.Libreria3.Entities.Client;
 import com.example.Libreria3.Exceptions.MyException;
+import com.example.Libreria3.Repository.IBookRepository;
 import com.example.Libreria3.Repository.IBorrowedRepository;
 import com.example.Libreria3.Util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BorrowedService {
 
     @Autowired
     private IBorrowedRepository iBorrowedRepository;
+    @Autowired
+    private IBookRepository iBookRepository;
 
     @Transactional
     public void create(Book book, Client client, Date returnDate, Date borrowingDate) throws MyException {
@@ -76,11 +78,21 @@ public class BorrowedService {
 
     @Transactional
     public void deleteLoan (Integer id){
+        Borrowed borrowed = iBorrowedRepository.findById(id).orElse(null);
+        Book book = iBookRepository.findById(borrowed.getBook().getId()).orElse(null);
+        book.setRemainingCopies(book.getRemainingCopies()+1);
+        book.setBorrowedCopies(book.getBorrowedCopies()-1);
+        borrowed.setBook(book);
         iBorrowedRepository.deleteById(id);
     }
 
     @Transactional
-    public void register (Integer id){
+    public void register (Integer id) {
+        Borrowed borrowed = iBorrowedRepository.findById(id).orElse(null);
+        Book book = iBookRepository.findById(borrowed.getBook().getId()).orElse(null);
+        book.setRemainingCopies(book.getRemainingCopies()-1);
+        book.setBorrowedCopies(book.getBorrowedCopies()+1);
+        borrowed.setBook(book);
         iBorrowedRepository.register(id);
     }
 }

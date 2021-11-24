@@ -1,14 +1,15 @@
 package com.example.Libreria3.Repository;
 
-import com.example.Libreria3.Entities.Author;
 import com.example.Libreria3.Entities.Publisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface IPublisherRepository extends JpaRepository<Publisher, Integer> {
 
     @Modifying

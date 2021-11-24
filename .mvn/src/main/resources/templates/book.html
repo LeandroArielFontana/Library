@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragment::head"></head>
+
+<body>
+    <nav th:replace="fragment::navbar"></nav>
+    <div class="container" id="show">
+        <div class="row">
+            <div class="col-12 mt-auto pt-5">
+                <div class="shadow p-3 mb-5 bg-body rounded justify-content-center">
+                    <h1 style="text-align: center;">LISTA DE LIBROS</h1>
+                    <div th:if="${books.isEmpty()}" style="text-align: center;">
+                        <h5>Aun no se cargaron libros por favor dirigase a <a th:href="@{/book/create}">Crear libro.</a>
+                        </h5>
+                    </div>
+                    <div th:replace="fragment::alerts"></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table col-12">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th scope="col">ISBN</th>
+                                            <th scope="col">Titulo</th>
+                                            <th scope="col">Ejemplares</th>
+                                            <th scope="col">Ejemplares Prestados</th>
+                                            <th scope="col">Ejemplares Restantes</th>
+                                            <th scope="col">Autor</th>
+                                            <th scope="col">Editorial</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="book : ${books}" class="text-center">
+                                            <td class="col px-md-2" th:text="${book.isbn}"></td>
+                                            <td class="col px-md-2" th:text="${book.title}"></td>
+                                            <td class="col px-md-2" th:text="${book.copies}"></td>
+                                            <td class="col px-md-2" th:text="${book.borrowedCopies}"></td>
+                                            <td class="col px-md-2" th:text="${book.remainingCopies}"></td>
+                                            <td class="col px-md-2" th:text="${book.author.name}"></td>
+                                            <td class="col px-md-2" th:text="${book.publisher.name}"></td>
+                                            <td class="col-2 px-md-2 d-flex justify-content-around w-100">
+                                                <a class="btn btn-secondary btn-sm"
+                                                    th:href="@{/book/edit/__${book.id}__}">Editar</a>
+                                                <form method="post"
+                                                    th:action="${book.register == true} ? @{/book/delete/__${book.id}__} : @{/book/register/__${book.id}__}">
+                                                    <button class="btn btn-danger btn-sm" type="submit"
+                                                        th:text="${book.register == true} ? 'Dar de baja' : 'Dar de alta'">Eliminar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="fragment::footer-gral"></footer>
+    <script th:replace="fragment::script-gral"></script>
+</body>
+
+</html>

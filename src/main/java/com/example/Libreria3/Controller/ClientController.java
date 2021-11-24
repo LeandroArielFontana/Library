@@ -1,9 +1,12 @@
 package com.example.Libreria3.Controller;
 
 import com.example.Libreria3.Entities.Client;
+import com.example.Libreria3.Entities.Role;
 import com.example.Libreria3.Exceptions.MyException;
 import com.example.Libreria3.Service.ClientService;
+import com.example.Libreria3.Service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,6 +24,9 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
+    @Autowired
+    private RoleService roleService;
+
     @GetMapping
     public ModelAndView showAll (HttpServletRequest request){
         ModelAndView mav = new ModelAndView("client");
@@ -37,15 +43,18 @@ public class ClientController {
     }
 
     @GetMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView createClient(){
         ModelAndView mav = new ModelAndView("client-form");
         mav.addObject("client", new Client());
         mav.addObject("title", "Crear Cliente");
         mav.addObject("action", "save");
+        mav.addObject("roles", roleService.findAll());
         return mav;
     }
 
     @GetMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView editClient(@PathVariable Integer id, RedirectAttributes attributes){
         ModelAndView mav = new ModelAndView("client-form");
 
@@ -58,16 +67,17 @@ public class ClientController {
             attributes.addFlashAttribute("error", e.getMessage());
             mav.setViewName("redirect:/client");
         }
-
+        mav.addObject("roles", roleService.findAll());
         mav.addObject("title", "Editar Cliente");
         mav.addObject("action", "edit");
         return mav;
     }
 
     @PostMapping("/save")
-    public RedirectView saveClient(@RequestParam String name, @RequestParam String lastName, @RequestParam Long dni, @RequestParam String phoneNumber, RedirectAttributes attributes) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public RedirectView saveClient(@RequestParam String name, @RequestParam String lastName, @RequestParam Long dni, @RequestParam String phoneNumber, @RequestParam("userSecurity.username") String username, @RequestParam("userSecurity.password") String password, @RequestParam("userSecurity.role") Role role, RedirectAttributes attributes) {
         try{
-            clientService.create(dni,name,lastName,phoneNumber);
+            clientService.create(dni,name,lastName,phoneNumber, username, password, role);
             attributes.addFlashAttribute("success", "El cliente ha sido creado exitosamente!");
         }catch (MyException e){
             attributes.addFlashAttribute("error", e.getMessage());
@@ -78,7 +88,8 @@ public class ClientController {
     }
 
     @PostMapping("/edit")
-    public RedirectView updateClient(@RequestParam Integer id, @RequestParam String name, @RequestParam String lastName, @RequestParam Long dni, @RequestParam String phoneNumber, RedirectAttributes attributes){
+    @PreAuthorize("hasRole('ADMIN')")
+    public RedirectView updateClient(@RequestParam Integer id, @RequestParam String name, @RequestParam String lastName, @RequestParam Long dni, @RequestParam String phoneNumber, @RequestParam Role role, RedirectAttributes attributes){
         try{
             clientService.update(id, name, lastName, phoneNumber, dni);
             attributes.addFlashAttribute("success", "El cliente ha sido actualizado exitosamente!");
@@ -91,12 +102,14 @@ public class ClientController {
     }
 
     @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView deleteClient(@PathVariable Integer id){
         clientService.delete(id);
         return new RedirectView("/client");
     }
 
     @PostMapping("/register/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView registerClient (@PathVariable Integer id){
         clientService.register(id);
         return new RedirectView("/client");

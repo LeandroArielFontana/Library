@@ -4,6 +4,7 @@ import com.example.Libreria3.Entities.Publisher;
 import com.example.Libreria3.Exceptions.MyException;
 import com.example.Libreria3.Service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +41,7 @@ public class PublisherController {
     }
 
     @GetMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView createPublisher() {
         ModelAndView mav = new ModelAndView("publisher-form");
         mav.addObject("publisher", new Publisher());
@@ -49,6 +51,7 @@ public class PublisherController {
     }
 
     @GetMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView editPublisher(@PathVariable Integer id, RedirectAttributes attributes) {
         ModelAndView mav = new ModelAndView("publisher-form");
 
@@ -68,6 +71,7 @@ public class PublisherController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView savePublisher(@RequestParam String name, RedirectAttributes attributes) {
 
         try{
@@ -83,6 +87,7 @@ public class PublisherController {
     }
 
     @PostMapping("/edit")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView updatePublisher(@RequestParam Integer id, @RequestParam String name, RedirectAttributes attributes) {
 
         try{
@@ -98,12 +103,14 @@ public class PublisherController {
     }
 
     @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView deletePublisher(@PathVariable Integer id) {
         publisherService.delete(id);
         return new RedirectView("/publisher");
     }
 
     @PostMapping("/register/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView register (@PathVariable Integer id) {
         publisherService.register(id);
         return new RedirectView("/publisher");

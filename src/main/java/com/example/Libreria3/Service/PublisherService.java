@@ -49,7 +49,9 @@ public class PublisherService {
             throw new MyException("El nombre contiene numeros");
         }
 
-        iPublisherRepository.updateName(id, name);
+        Publisher publisher = iPublisherRepository.findById(id).orElse(null);
+        publisher.setName(name);
+        iPublisherRepository.save(publisher);
     }
 
     @Transactional

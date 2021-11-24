@@ -1,6 +1,7 @@
 package com.example.Libreria3.Service;
 
 import com.example.Libreria3.Entities.Client;
+import com.example.Libreria3.Entities.Role;
 import com.example.Libreria3.Exceptions.MyException;
 import com.example.Libreria3.Repository.IClientRepository;
 import com.example.Libreria3.Util.Util;
@@ -10,13 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class ClientService {
+public class ClientService{
 
     @Autowired
     private IClientRepository iClientRepository;
 
+    @Autowired
+    private UserService userService;
+
     @Transactional
-    public void create (Long dni, String name, String lastName, String phoneNumber) throws MyException {
+    public void create (Long dni, String name, String lastName, String phoneNumber, String username, String password, Role role) throws MyException {
 
         if (Util.checkWhiteSpace(name) && Util.checkWhiteSpace(lastName)){
             throw new MyException("Los campos no pueden venir vacios");
@@ -34,6 +38,7 @@ public class ClientService {
         client.setLastName(lastName);
         client.setPhoneNumber(phoneNumber);
         client.setRegister(true);
+        client.setUserSecurity(userService.create(username,password, role));
         iClientRepository.save(client);
     }
 
@@ -52,7 +57,12 @@ public class ClientService {
             throw new MyException("El DNI ingresado debe tener entre 7 y 9 caracteres");
         }
 
-        iClientRepository.update(id, name, lastName, phoneNumber, dni);
+        Client client = iClientRepository.findById(id).orElse(null);
+        client.setName(name);
+        client.setLastName(lastName);
+        client.setPhoneNumber(phoneNumber);
+        client.setDni(dni);
+        iClientRepository.save(client);
     }
 
     @Transactional

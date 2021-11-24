@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragment::head"></head>
+
+<body>
+    <nav th:replace="fragment::navbar"></nav>
+    <div class="container" id="form">
+        <div class="row">
+            <div class="col-12 mt-auto pt-5">
+                <div class="shadow p-3 mb-5 bg-body rounded justify-content-center" style="width: 500px;">
+                    <h1 style="text-align: center;">FORMULARIO DE PRESTAMOS DE LIBROS</h1>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <form class="g-5 needs-validation" autocomplete="off" novalidate method="POST"
+                                    th:action="@{/borrowed/__${action}__}" th:object="${borrowed}">
+                                    <input th:field="*{id}" type="hidden" />
+                                    <div class="input-group mb-3 mt-3">
+                                        <label class="input-group-text" for="inputGroupSelect01">Libro</label>
+                                        <select class="form-select" id="inputGroupSelect01" required th:field="*{book}">
+                                            <option selected disabled value="">Elija un Libro...</option>
+                                            <option th:value="${book.id}" th:each="book : ${books}">
+                                                <span th:text="${book.title}"></span>
+                                            </option>
+                                        </select>
+                                        <div class="invalid-tooltip">
+                                            Por favor elija un Libro.
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3 mt-3">
+                                        <label class="input-group-text" for="inputGroupSelect01">Cliente</label>
+                                        <select class="form-select" id="inputGroupSelect01" required th:field="*{client}">
+                                            <option selected disabled value="">Elija un Cliente...</option>
+                                            <option th:value="${client.id}" th:each="client : ${clients}">
+                                                <span th:text="${client.name}"></span>
+                                            </option>
+                                        </select>
+                                        <div class="invalid-tooltip">
+                                            Por favor elija un Cliente.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 position-relative">
+                                        <label for="validationTooltip01" class="form-label">Inicio del Prestamo</label>
+                                        <input type="date" class="form-control" id="validationTooltip01" required
+                                            th:field="*{borrowingDate}">
+                                        <div class="invalid-tooltip">
+                                            Inserte la fecha de inicio del prestamo del libro por favor
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 position-relative">
+                                        <label for="validationTooltip01" class="form-label">Fin del Prestamo</label>
+                                        <input type="date" class="form-control" id="validationTooltip01" required
+                                            th:field="*{returnDate}">
+                                        <div class="invalid-tooltip">
+                                            Inserte la fecha de fin del prestamo del libro por favor
+                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <button class="btn btn-primary mt-5" type="submit"
+                                            th:text="${action == 'save'} ? 'Prestar libro' : 'Guardar cambios'">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="fragment::footer-gral"></footer>
+    <script th:replace="fragment::script-gral"></script>
+    <script th:replace="fragment::form-js"></script>
+</body>
+
+</html>
