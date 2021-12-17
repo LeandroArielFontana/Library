@@ -10,5 +10,4 @@ public class PrincipalController {
     public String principal(){
         return "index";
     }
-
 }
