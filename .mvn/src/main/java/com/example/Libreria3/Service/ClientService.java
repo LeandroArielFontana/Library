@@ -1,9 +1,9 @@
-package com.example.Libreria3.Service;
+package com.example.Libreria.Service;
 
-import com.example.Libreria3.Entities.Client;
-import com.example.Libreria3.Exceptions.MyException;
-import com.example.Libreria3.Repository.IClientRepository;
-import com.example.Libreria3.Util.Util;
+import com.example.Libreria.Entities.Client;
+import com.example.Libreria.Exceptions.MyException;
+import com.example.Libreria.Repository.IClientRepository;
+import com.example.Libreria.Util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

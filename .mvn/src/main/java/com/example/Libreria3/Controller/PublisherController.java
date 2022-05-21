@@ -1,8 +1,8 @@
-package com.example.Libreria3.Controller;
+package com.example.Libreria.Controller;
 
-import com.example.Libreria3.Entities.Publisher;
-import com.example.Libreria3.Exceptions.MyException;
-import com.example.Libreria3.Service.PublisherService;
+import com.example.Libreria.Entities.Publisher;
+import com.example.Libreria.Exceptions.MyException;
+import com.example.Libreria.Service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

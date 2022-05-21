@@ -1,4 +1,4 @@
-package com.example.Libreria3.Exceptions;
+package com.example.Libreria.Exceptions;
 
 public class MyException extends Exception{
 

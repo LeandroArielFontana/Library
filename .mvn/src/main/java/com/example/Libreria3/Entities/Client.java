@@ -1,4 +1,4 @@
-package com.example.Libreria3.Entities;
+package com.example.Libreria.Entities;
 
 import org.hibernate.annotations.SQLDelete;
 

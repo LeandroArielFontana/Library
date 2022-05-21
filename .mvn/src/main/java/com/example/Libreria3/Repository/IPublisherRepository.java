@@ -1,7 +1,7 @@
-package com.example.Libreria3.Repository;
+package com.example.Libreria.Repository;
 
-import com.example.Libreria3.Entities.Author;
-import com.example.Libreria3.Entities.Publisher;
+import com.example.Libreria.Entities.Author;
+import com.example.Libreria.Entities.Publisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

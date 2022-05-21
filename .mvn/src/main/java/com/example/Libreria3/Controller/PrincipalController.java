@@ -1,4 +1,4 @@
-package com.example.Libreria3.Controller;
+package com.example.Libreria.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

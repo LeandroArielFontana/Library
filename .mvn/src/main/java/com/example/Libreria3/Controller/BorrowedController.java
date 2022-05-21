@@ -1,12 +1,12 @@
-package com.example.Libreria3.Controller;
+package com.example.Libreria.Controller;
 
-import com.example.Libreria3.Entities.Book;
-import com.example.Libreria3.Entities.Borrowed;
-import com.example.Libreria3.Entities.Client;
-import com.example.Libreria3.Exceptions.MyException;
-import com.example.Libreria3.Service.BookService;
-import com.example.Libreria3.Service.BorrowedService;
-import com.example.Libreria3.Service.ClientService;
+import com.example.Libreria.Entities.Book;
+import com.example.Libreria.Entities.Borrowed;
+import com.example.Libreria.Entities.Client;
+import com.example.Libreria.Exceptions.MyException;
+import com.example.Libreria.Service.BookService;
+import com.example.Libreria.Service.BorrowedService;
+import com.example.Libreria.Service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
